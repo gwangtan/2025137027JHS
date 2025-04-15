@@ -12,7 +12,7 @@ public class TrapEffect2D : MonoBehaviour
     void Start()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        initialPosition = playerObject.transform.position;
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)

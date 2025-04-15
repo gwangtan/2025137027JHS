@@ -8,15 +8,18 @@ TagManager:
   - Portal
   - DeadZone
   - SpeedBoost
+  - Boundary
+  - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Broken
   - 
   - 
   - 

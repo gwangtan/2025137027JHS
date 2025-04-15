@@ -60,6 +60,7 @@ public class PlayerMoveScript : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+
     }
 
     // 이동 속도 증가 효과 적용 함수
@@ -77,4 +78,6 @@ public class PlayerMoveScript : MonoBehaviour
         yield return new WaitForSeconds(speedBoostDuration);
         speed = originalSpeed;
     }
+
+
 }
