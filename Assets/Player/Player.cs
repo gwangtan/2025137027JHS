@@ -8,6 +8,7 @@ public class PlayerMoveScript : MonoBehaviour
     public float speed = 7f;
     private Rigidbody2D rb;
     private bool isGrounded;
+    public float jumpForce = 300f; // 점프 힘 변수 추가
 
     // 이동 속도 아이템 관련 변수
     private float originalSpeed;
@@ -41,7 +42,7 @@ public class PlayerMoveScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.AddForce(Vector2.up * 300);
+            rb.AddForce(Vector2.up * jumpForce);
             isGrounded = false;
         }
     }
@@ -79,5 +80,9 @@ public class PlayerMoveScript : MonoBehaviour
         speed = originalSpeed;
     }
 
-
+    // 점프력 변경 함수 추가 (ItemEffect에서 호출)
+    public void ChangeJumpForce(float multiplier)
+    {
+        jumpForce *= multiplier;
+    }
 }

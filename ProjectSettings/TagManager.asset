@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Obstacle
   - LastBoss
+  - JumpGangHwa
   layers:
   - Default
   - TransparentFX
