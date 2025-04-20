@@ -1502,6 +1502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 1460949776}
   speed: 2
+  jumpForce: 300
 --- !u!114 &1460949782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2572,8 +2573,8 @@ Transform:
   m_GameObject: {fileID: 2003989819}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12, y: -0.53, z: 5.08}
-  m_LocalScale: {x: 1.6057327, y: 1.2540945, z: 1}
+  m_LocalPosition: {x: -0.12, y: -0.42, z: 5.08}
+  m_LocalScale: {x: 1.8825524, y: 1.4765763, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1530119522}

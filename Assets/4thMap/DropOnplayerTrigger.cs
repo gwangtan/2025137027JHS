@@ -26,6 +26,6 @@ public class DropOnPlayerTrigger : MonoBehaviour
         {
             rb = gameObject.AddComponent<Rigidbody2D>();
         }
-        rb.gravityScale = 1.5f; // 중력 적용해서 떨어지게 하기
+        rb.gravityScale = 1f; // 중력 적용해서 떨어지게 하기
     }
 }

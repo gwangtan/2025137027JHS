@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 470, y: -259}
+  m_AnchoredPosition: {x: 413, y: -259}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5358777
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "/ 3\uCD08 \uB3C4\uC57D \uAC15\uD654"
+  m_text: " /\uB3C4\uC57D \uB79C\uB364\uC124\uC815 "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a2e6047654b8b0a4eaae2307010553b6, type: 2}
   m_sharedMaterial: {fileID: 5929263901399263972, guid: a2e6047654b8b0a4eaae2307010553b6, type: 2}
@@ -1037,7 +1037,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 141, y: -259}
+  m_AnchoredPosition: {x: 109.99997, y: -259}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &802017936
@@ -2328,7 +2328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.18912323, b: 0.6792453, a: 1}
+  m_Color: {r: 0.8396226, g: 0, b: 0.03465024, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
