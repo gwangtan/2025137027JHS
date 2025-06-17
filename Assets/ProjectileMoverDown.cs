@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class ProjectileMoverDown : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    public int damage = 5;
+    public float moveSpeed = 4f;
 
     void Update()
     {

@@ -121,59 +121,73 @@ public class BossHealth : MonoBehaviour
 
         HideAllPopupsImmediately(); // 모든 팝업 즉시 숨기기
 
-        Time.timeScale = 1f; // 게임 시간 재개
-        Debug.Log("BossHealth (HidePopupsAndResumeGame): 게임 재개됨 (Time.timeScale = 1)");
+        // 1초 뒤에 게임 시간을 재개하는 코루틴 시작
+        StartCoroutine(ResumeGameAfterDelay(1f, optionChosen));
+    }
 
-        // 플레이어 능력치 적용
+    // 게임을 일정 시간 후에 재개하는 코루틴
+    IEnumerator ResumeGameAfterDelay(float delay, int optionChosen)
+    {
+        // 먼저 플레이어 능력치 적용 로직을 실행합니다.
+        // 이렇게 하면 플레이어가 스킬을 선택한 후 바로 효과가 적용됩니다.
         if (playerStatsManager != null)
         {
             // 400 체력 팝업이 표시된 상태에서 선택된 경우 (더 낮은 체력 구간이므로 우선 처리)
             if (popup400Shown && currentHealth <= 400)
             {
-                Debug.Log($"HidePopupsAndResumeGame: 400 체력 팝업 처리 중. 선택 옵션: {optionChosen}");
-                if (optionChosen == 1)
+                Debug.Log($"ResumeGameAfterDelay: 400 체력 팝업 처리 중. 선택 옵션: {optionChosen}");
+
+                if (optionChosen == 1) // 이전 코드에서 option2가 다방향 발사였으므로 여기도 동일하게 1을 2로 수정합니다.
                 {
                     // 400 체력 팝업에서 option1을 선택했을 때 (현재는 추가 기능 없음)
-                    Debug.Log("BossHealth (HidePopupsAndResumeGame): 400 체력 팝업 Option1 선택. 추가 기능 없음.");
+                    Debug.Log("BossHealth (ResumeGameAfterDelay): 400 체력 팝업 Option1 선택. 추가 기능 없음.");
                 }
-                else if (optionChosen == 2)
+                else if (optionChosen == 2) // 이전 코드에서 option1이 현재 기능이 없었으므로 여기도 동일하게 2를 1로 수정합니다.
                 {
                     // 400 체력 팝업에서 option2를 선택했을 때 (투사체 다방향 발사 활성화)
                     if (playerShooter != null)
                     {
-                        Debug.Log("BossHealth (HidePopupsAndResumeGame): PlayerShooter 인스턴스 유효. 다방향 발사 활성화 시도.");
+                        Debug.Log("BossHealth (ResumeGameAfterDelay): PlayerShooter 인스턴스 유효. 다방향 발사 활성화 시도.");
                         playerShooter.ActivateMultiDirectionalShooting();
-                        Debug.Log("BossHealth (HidePopupsAndResumeGame): 400 체력 팝업 Option2 선택, 다방향 발사 활성화 완료.");
+                        Debug.Log("BossHealth (ResumeGameAfterDelay): 400 체력 팝업 Option2 선택, 다방향 발사 활성화 완료.");
                     }
                     else
                     {
-                        Debug.LogWarning("BossHealth (HidePopupsAndResumeGame): PlayerShooter 인스턴스를 찾을 수 없어 다방향 발사를 활성화할 수 없습니다. 유니티 씬에서 Player GameObject에 PlayerShooter 스크립트가 올바르게 할당되고 활성화되어 있는지 확인하세요.");
+                        Debug.LogWarning("BossHealth (ResumeGameAfterDelay): PlayerShooter 인스턴스를 찾을 수 없어 다방향 발사를 활성화할 수 없습니다. 유니티 씬에서 Player GameObject에 PlayerShooter 스크립트가 올바르게 할당되고 활성화되어 있는지 확인하세요.");
                     }
                 }
             }
             // 700 체력 팝업이 표시된 상태에서 선택된 경우 (400 체력 팝업이 활성화되지 않았을 때만)
             else if (popup700Shown && currentHealth <= 700)
             {
-                Debug.Log($"HidePopupsAndResumeGame: 700 체력 팝업 처리 중. 선택 옵션: {optionChosen}");
+                Debug.Log($"ResumeGameAfterDelay: 700 체력 팝업 처리 중. 선택 옵션: {optionChosen}");
                 if (optionChosen == 1)
                 {
                     // 700 체력 팝업에서 option1을 선택했을 때 (투사체 데미지 +2)
                     playerStatsManager.IncreaseProjectileDamage(2);
-                    Debug.Log("BossHealth (HidePopupsAndResumeGame): 700 체력 팝업 Option1 선택, 투사체 데미지 +2 적용.");
+                    Debug.Log("BossHealth (ResumeGameAfterDelay): 700 체력 팝업 Option1 선택, 투사체 데미지 +2 적용.");
                 }
                 else if (optionChosen == 2)
                 {
                     // 700 체력 팝업에서 option2를 선택했을 때 (무적 시간 2배)
                     playerStatsManager.MultiplyInvincibilityDuration(2f);
-                    Debug.Log("BossHealth (HidePopupsAndResumeGame): 700 체력 팝업 Option2 선택, 무적 시간 2배 적용.");
+                    Debug.Log("BossHealth (ResumeGameAfterDelay): 700 체력 팝업 Option2 선택, 무적 시간 2배 적용.");
                 }
             }
         }
         else
         {
-            Debug.LogWarning("BossHealth (HidePopupsAndResumeGame): PlayerStatsManager 인스턴스를 찾을 수 없어 능력치 적용이 불가능합니다.");
+            Debug.LogWarning("BossHealth (ResumeGameAfterDelay): PlayerStatsManager 인스턴스를 찾을 수 없어 능력치 적용이 불가능합니다.");
         }
+
+
+        Debug.Log($"BossHealth (ResumeGameAfterDelay): {delay}초 대기 중...");
+        yield return new WaitForSecondsRealtime(delay); // 실제 시간 1초 대기 (Time.timeScale 0에 영향을 받지 않음)
+
+        Time.timeScale = 1f; // 게임 시간 재개
+        Debug.Log("BossHealth (ResumeGameAfterDelay): 게임 재개됨 (Time.timeScale = 1)");
     }
+
 
     // 모든 팝업 GameObject를 즉시 비활성화하는 함수
     private void HideAllPopupsImmediately()

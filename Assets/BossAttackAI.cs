@@ -28,7 +28,13 @@ public class BossAttackAI : MonoBehaviour
     public GameObject projectilePrefab6;
 
     public float attackInterval = 3f;
-    public float projectileSpeed = 8f;
+    public float projectileSpeed = 3f;
+
+    // --- 투사체 1 & 2 전용 육각형 발사 설정 ---
+    [Header("투사체 1 & 2 전용 육각형 발사 설정")]
+    public float hexSpreadRadius12 = 0.5f; // 육각형 중심으로부터 투사체까지의 거리
+    [Tooltip("육각형(6) 또는 칠각형(7) 등 원하는 투사체 개수로 설정하세요.")]
+    public int numberOfProjectiles12 = 7; // 육각형을 구성할 투사체 개수 (6개로 고정)
 
     [Header("투사체 3 & 4 전용 설정")]
     public float orbitRadius = 0.4f;
@@ -83,7 +89,7 @@ public class BossAttackAI : MonoBehaviour
                 GameObject hexP = hexProjectiles[i];
                 if (hexP != null && hexP.transform.parent == this.transform)
                 {
-                    float angle = (i * 60f) + currentHexOrbitAngle;
+                    float angle = (i * (360f / hexProjectiles.Count)) + currentHexOrbitAngle; // Dynamically adjust angle based on current hex projectiles count
                     Vector3 orbitOffset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * hexFormationRadius;
                     hexP.transform.localPosition = orbitOffset;
                 }
@@ -113,7 +119,7 @@ public class BossAttackAI : MonoBehaviour
         switch (attackChoice)
         {
             case 0:
-                StartCoroutine(AttackPattern1And2());
+                StartCoroutine(AttackPattern1And2Hexagonal());
                 break;
             case 1:
                 StartCoroutine(AttackPattern3And4());
@@ -132,23 +138,40 @@ public class BossAttackAI : MonoBehaviour
         }
     }
 
-    IEnumerator AttackPattern1And2()
+    // 투사체 1 & 2를 보스 주위에서 육각형(또는 설정된 n-각형) 모양으로 퍼지게 발사
+    IEnumerator AttackPattern1And2Hexagonal()
     {
+        // 투사체 1 발사
         if (projectilePrefab1 != null)
         {
-            GameObject p1 = Instantiate(projectilePrefab1, transform.position, Quaternion.identity);
-            Rigidbody2D rb1 = p1.GetComponent<Rigidbody2D>();
-            if (rb1 != null) rb1.velocity = Vector2.down * projectileSpeed;
+            for (int i = 0; i < numberOfProjectiles12; i++)
+            {
+                // 각 투사체의 각도를 균등하게 분배 (예: 7개면 360/7 = 약 51.4도 간격)
+                float angle = i * (360f / numberOfProjectiles12);
+                // 보스의 중앙에서부터 각도를 이용해 투사체의 방향과 초기 위치를 계산
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+                Vector3 spawnPos = transform.position + (Vector3)direction * hexSpreadRadius12; // 보스 주변에 생성
+
+                GameObject p1 = Instantiate(projectilePrefab1, spawnPos, Quaternion.identity);
+                Rigidbody2D rb1 = p1.GetComponent<Rigidbody2D>();
+                if (rb1 != null) rb1.velocity = direction * projectileSpeed; // 계산된 방향으로 발사
+            }
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f); // 첫 번째 발사 후 대기 시간
+
+        // 투사체 2 발사
         if (projectilePrefab2 != null)
         {
-            GameObject p2_1 = Instantiate(projectilePrefab2, transform.position, Quaternion.identity);
-            GameObject p2_2 = Instantiate(projectilePrefab2, transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
-            Rigidbody2D rb2_1 = p2_1.GetComponent<Rigidbody2D>();
-            Rigidbody2D rb2_2 = p2_2.GetComponent<Rigidbody2D>();
-            if (rb2_1 != null) rb2_1.velocity = Vector2.down * projectileSpeed;
-            if (rb2_2 != null) rb2_2.velocity = Vector2.down * projectileSpeed;
+            for (int i = 0; i < numberOfProjectiles12; i++)
+            {
+                float angle = i * (360f / numberOfProjectiles12);
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
+                Vector3 spawnPos = transform.position + (Vector3)direction * hexSpreadRadius12;
+
+                GameObject p2 = Instantiate(projectilePrefab2, spawnPos, Quaternion.identity);
+                Rigidbody2D rb2 = p2.GetComponent<Rigidbody2D>();
+                if (rb2 != null) rb2.velocity = direction * projectileSpeed;
+            }
         }
     }
 

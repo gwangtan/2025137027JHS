@@ -91,9 +91,5 @@ public class PlayerShooter : MonoBehaviour
     }
 
     // 다방향 발사 기능을 비활성화하는 공용 메서드 (필요시 사용)
-    public void DeactivateMultiDirectionalShooting()
-    {
-        isMultiDirectionalShootingActive = false;
-        Debug.Log("PlayerShooter (DeactivateMultiDirectionalShooting): 다방향 발사 비활성화됨.");
-    }
+
 }
